@@ -25,6 +25,20 @@ namespace Marketplace.Core.Bl
         /// <returns>LIst of users</returns>
         Task<IEnumerable<User>> GetUsersAsync();
 
+        /// <summary>
+        /// save user.
+        /// </summary>
+        /// <param name="user">user new.</param> 
+        /// <returns>new user</returns>
+        Task<User> SaveUser(User user);
+
+        /// <summary>
+        /// get user by username.
+        /// </summary>
+        /// <param name="username">username to return </param> 
+        /// <returns>user</returns>
+        Task<User> GetUserByUsername(string username);
+
         #endregion
     }
 }

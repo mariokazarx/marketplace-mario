@@ -47,6 +47,17 @@ namespace Marketplace.Bl
             return await this.userRepository.GetAllUsersAsync().ConfigureAwait(false);
         }
 
+        /// <inheritdoc />
+        public async Task<User> SaveUser(User user)
+        {
+            return await this.userRepository.SaveUser(user).ConfigureAwait(false);
+        }
+
+        /// <inheritdoc />
+        public async Task<User> GetUserByUsername(string username){
+            return await this.userRepository.GetUserByUsername(username).ConfigureAwait(false);
+        }
+
         #endregion
     }
 }

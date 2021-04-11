@@ -24,6 +24,20 @@ namespace Marketplace.Core.Dal
         /// <returns>Array of users</returns>
         Task<User[]> GetAllUsersAsync();
 
+        /// <summary>
+        /// save user.
+        /// </summary>
+        /// <param name="user">user new.</param> 
+        /// <returns>new user</returns>
+        Task<User> SaveUser(User user);
+
+        /// <summary>
+        /// get user by username.
+        /// </summary>
+        /// <param name="username">user username to return </param> 
+        /// <returns>user</returns>
+        Task<User> GetUserByUsername(string username);
+
         #endregion
     }
 }

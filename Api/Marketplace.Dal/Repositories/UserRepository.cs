@@ -12,6 +12,7 @@ namespace Marketplace.Dal.Repositories
     using Marketplace.Core.Dal;
     using Marketplace.Core.Model;
     using Microsoft.EntityFrameworkCore;
+    using System.Linq;
 
     public class UserRepository : IUserRepository
     {
@@ -36,6 +37,20 @@ namespace Marketplace.Dal.Repositories
         public async Task<User[]> GetAllUsersAsync()
         {
             return await this.context.Users.ToArrayAsync();
+        }
+
+        /// <inheritdoc />
+        public async Task<User> SaveUser(User user)
+        {
+            context.Users.Add(user);
+            await context.SaveChangesAsync();
+            return user;
+        }
+
+        /// <inheritdoc />
+        public async Task<User> GetUserByUsername(string username)
+        {
+            return await this.context.Users.FirstOrDefaultAsync(user => user.Username == username);
         }
 
         #endregion

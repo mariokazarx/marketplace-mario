@@ -1,0 +1,28 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="z-index: 1;">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">ROSEN Marketplace</a>
+    <button *ngIf="logingService.isLoggedIn()"  class="navbar-toggler" type="button" (click)="navbarOpen=!navbarOpen" >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div *ngIf="logingService.isLoggedIn()" class="collapse navbar-collapse" [ngClass]="{'show': navbarOpen}" id="navbarNav">
+      <ul class="navbar-nav ul-navbar">
+        <li class="nav-item">
+          <a class="nav-link"routerLinkActive="active" (click)="navbarOpen=false" [routerLinkActiveOptions]="{ exact: true }" routerLink="/">List</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLinkActive="active" (click)="navbarOpen=false" routerLink="/create">Post new</a>
+        </li>
+      </ul>
+      <ul class="navbar-nav ul-navbar ul-navbar-usename" *ngIf="logingService.isLoggedIn()">
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Hello, {{logingService.username}}
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item" (click)="logout()" >Logout</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>

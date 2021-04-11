@@ -18,6 +18,7 @@ namespace Marketplace.Api
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
     using Microsoft.OpenApi.Models;
+    using Microsoft.AspNetCore.Http;
 
     public class Startup
     {
@@ -52,6 +53,14 @@ namespace Marketplace.Api
 
             app.UseRouting();
 
+            // global cors policy
+            app.UseCors(x => x
+                .AllowAnyMethod()
+                .AllowAnyHeader()
+                .SetIsOriginAllowed(origin => true) // allow any origin
+                .AllowCredentials()); // allow credentials
+
+
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
@@ -65,6 +74,24 @@ namespace Marketplace.Api
 
             services.AddScoped<IUserBl, UserBl>();
             services.AddScoped<IUserRepository, UserRepository>();
+
+            services.AddScoped<IOfferBl, OfferBl>();
+            services.AddScoped<IOfferRepository, OfferRepository>();
+
+            services.AddScoped<ICategoryBl, CategoryBl>();
+            services.AddScoped<ICategoryRepository, CategoryRepository>();
+
+            services.AddHttpContextAccessor();
+            services.AddSingleton<IUriBl>(o =>
+           {
+               var accessor = o.GetRequiredService<IHttpContextAccessor>();
+               var request = accessor.HttpContext.Request;
+               var uri = string.Concat(request.Scheme, "://", request.Host.ToUriComponent());
+               return new UriBl(uri);
+           });
+
+           services.AddCors();
+
         }
 
         #endregion

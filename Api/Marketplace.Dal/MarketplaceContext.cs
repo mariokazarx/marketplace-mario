@@ -35,7 +35,7 @@ namespace Marketplace.Dal
         #region Methods
 
         // TODO: Change the location of the Database file and use migrations update database to generate the file.
-        protected override void OnConfiguring(DbContextOptionsBuilder options) => options.UseSqlite(@"Data Source=c:\temp\marketplace.db");
+        protected override void OnConfiguring(DbContextOptionsBuilder options) => options.UseSqlite(@"Data Source=/home/seratic-pc2/db/marketplace.db");
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -47,6 +47,8 @@ namespace Marketplace.Dal
                     builder.ToTable("User");
 
                     builder.HasKey(t => t.Id);
+
+                    builder.Ignore(u => u.Offers);
                 });
 
             modelBuilder.Entity<Category>(
@@ -75,6 +77,15 @@ namespace Marketplace.Dal
                     builder.Property(t => t.Title).IsRequired().HasMaxLength(100);
 
                     builder.Property(t => t.UserId).IsRequired();
+
+                    builder.HasOne(o => o.User)
+                        .WithMany(u => u.Offers)
+                        .HasForeignKey(o => o.UserId);
+
+                    builder.HasOne(o => o.Category)
+                        .WithMany(c => c.Offers)
+                        .HasForeignKey(o => o.CategoryId);
+
                 });
         }
 
