@@ -38,9 +38,7 @@ export class OfferCreationComponent implements OnInit {
 
   offerSubmit() {
     if(this.offerForm.valid){
-      console.log('OFFER', this.offer);
       this.marketplaceApiService.postOffer(this.offer).subscribe( (resp:any)=>{
-        console.log('RESPONSE CREATED', resp);
         this.router.navigate(['']);
       });
     }else{
